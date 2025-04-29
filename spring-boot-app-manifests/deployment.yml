@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: spring-boot-app
-        image: devil25/ultimate-cicd:replaceImageTag
+        image: devil25/custom-maven-image:v1:replaceImageTag
         ports:
         - containerPort: 8080
