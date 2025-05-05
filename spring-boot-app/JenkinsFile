@@ -2,7 +2,7 @@ pipeline {
   agent {
     docker {
       image 'herosk/custom-maven:v1'
-      args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+      args '--user root -v /var/run/docker.sock:/var/run/docker.sock -e DOCKER_HOST=tcp://100.29.187.52:8080'
     }
   }
   stages {
@@ -31,6 +31,7 @@ pipeline {
     }
    stage('Build and Push Docker Image') {
       environment {
+        DOCKER_HOST = "tcp://100.29.187.52:8080"
         DOCKER_IMAGE = "herosk/custom-app:${BUILD_NUMBER}"
         // DOCKERFILE_LOCATION = "spring-boot-app/Dockerfile"
         REGISTRY_CREDENTIALS = credentials('docker-cred')
