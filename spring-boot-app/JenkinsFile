@@ -6,7 +6,7 @@ pipeline {
     }
   }
 environment {
-    DOCKER_HOST = "tcp://100.29.187.52:8080"
+    export DOCKER_HOST="ssh://jenkins@100.29.187.52"
 }
   stages {
     stage('Checkout') {
