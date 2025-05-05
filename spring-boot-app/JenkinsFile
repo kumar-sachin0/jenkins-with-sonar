@@ -32,6 +32,7 @@ pipeline {
    stage('Build and Push Docker Image') {
     environment {
         DOCKER_IMAGE = "herosk/custom-app:${BUILD_NUMBER}"
+        args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
         REGISTRY_CREDENTIALS = credentials('docker-cred')
     }
     steps {
