@@ -5,6 +5,9 @@ pipeline {
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock -e DOCKER_HOST=tcp://100.29.187.52:8080'
     }
   }
+environment {
+    DOCKER_HOST = "tcp://100.29.187.52:8080"
+}
   stages {
     stage('Checkout') {
       steps {
