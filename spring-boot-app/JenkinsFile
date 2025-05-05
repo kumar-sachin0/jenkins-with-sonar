@@ -32,6 +32,7 @@ pipeline {
     stage('Build and Push Docker Image') {
       environment {
         DOCKER_IMAGE = "herosk/custom-app:${BUILD_NUMBER}"
+        DOCKER_HOST = "tcp://100.29.187.52:8080"
         // DOCKERFILE_LOCATION = "cd spring-boot-app/Dockerfile"
         REGISTRY_CREDENTIALS = credentials('docker-cred')
       }
