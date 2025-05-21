@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: spring-boot-app
-        image: herosk/custom-app:replaceImageTag
+        image: imskumar/my-app:replaceImageTag
         ports:
         - containerPort: 8080
