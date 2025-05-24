@@ -27,11 +27,8 @@ pipeline {
     }
     steps {
         script {
-            // Ensure Docker path is correctly set
-            sh 'export PATH=$PATH:/usr/bin/docker'
-
-            // Build Docker image
-            sh 'cd spring-boot-app && docker build -t ${DOCKER_IMAGE} .'
+            // Build Docker image with required args
+            sh 'cd spring-boot-app && docker build --user root -v /var/run/docker.sock:/var/run/docker.sock -t ${DOCKER_IMAGE} .'
 
             // Push Docker image
             def dockerImage = docker.image("${DOCKER_IMAGE}")
