@@ -1,29 +1,27 @@
 pipeline {
-  agent {
-    docker {
-      image 'maven:latest'
-      args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+    agent {
+        docker {
+            image 'maven:latest'
+            args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+        }
     }
-  }
-environment {
+
+    environment {
         DOCKER_CREDENTIALS = credentials('docker-cred')
-    }
-  stages {
-    stage('Checkout') {
-      steps {
-        sh 'echo passed'
-        //git branch: 'main', url: 'https://github.com/kumar-sachin0/jenkins-with-sonar.git'
-      }
-    }
-    stage('Build and Test') {
-      steps {
-        sh 'ls -ltr'
-        // build the project and create a JAR file
-        sh 'cd spring-boot-app && mvn clean package'
-      }
     }
 
     stages {
+        stage('Checkout') {
+            steps {
+                sh 'echo passed'
+            }
+        }
+        stage('Build and Test') {
+            steps {
+                sh 'ls -ltr'
+                sh 'cd spring-boot-app && mvn clean package'
+            }
+        }
         stage('Docker Login') {
             steps {
                 sh 'echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin'
@@ -44,13 +42,13 @@ environment {
             }
         }
     }
+
     post {
         always {
             sh 'docker logout'
         }
     }
-}
-    
+
     stage('Update Deployment File') {
         environment {
             GIT_REPO_NAME = "jenkins-with-sonar"
@@ -70,5 +68,4 @@ environment {
             }
         }
     }
-  }
 }
